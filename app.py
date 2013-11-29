@@ -2,7 +2,7 @@ from flask import Flask, render_template, send_from_directory
 import random
 import os
 import nltk
-from nltk.stem import WordNetLemmatizer
+# from nltk.stem import WordNetLemmatizer
 
 # initialization
 app = Flask(__name__)
