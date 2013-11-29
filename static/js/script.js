@@ -1,10 +1,11 @@
-function(window, document, undefined) {
+// function(window, document, undefined) {
 
   var DOGE_URL = '/dogify/';
   var STATUS_OK = 200;
   var REQUEST_DONE = 4;
 
   var dogifyButton = document.getElementById('dogify');
+  console.log(dogifyButton);
   var toDogify = document.getElementById('user-input');
   var outputSpace = document.getElementById('result');
 
@@ -19,7 +20,7 @@ function(window, document, undefined) {
     request.addEventListener('readystatechange', function(event) {
       if (this.readyState === REQUEST_DONE) {
         if (this.status === STATUS_OK) {
-          var response = JSON.parse(this.responseText);
+          var response = this.responseText;
           outputSpace.innerHTML = response;
         } else {
           // $('.error')[0].innerHTML = this.responseText;
@@ -28,4 +29,4 @@ function(window, document, undefined) {
     });
   });
 
-})(this, this.document);
+// })(this, this.document);
