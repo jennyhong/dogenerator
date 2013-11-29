@@ -2,10 +2,18 @@
 {% block title %} - Home{% endblock %}
 {% block content %}
 
-<div class="user-input">
-	<textarea name="user-input"></textarea>
+<div class="jumbotron">
+	<h2>Dogify me</h2>
+	<p class="lead">
+		Paste text here. We'll take care of the rest.
+	</p>
+	<p>
+		<textarea name="user-input" id="user-input"></textarea>
+	</p>
+	<p>
+		<a class="btn btn-lg btn-success" href="#" role="button">Dogify</a>
+	</p>
 </div>
 
-<button>Doge</button>
 
 {% endblock %}
