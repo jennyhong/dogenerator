@@ -5,6 +5,7 @@
 
 import random
 import nltk
+#import io
 from nltk.stem import WordNetLemmatizer
 
 def dogify(inp):
@@ -41,11 +42,14 @@ def dogify(inp):
         ret.append(i)
       prv = i
     x = rnd(len(ret))
-    return ret[x]
+    r = ret[x]
+    return r
+##    return wnl.lemmatize(r)
 
-  noun = wnl.lemmatize(go(l1))
-  adj = wnl.lemmatize(go(l2))
-  verb = wnl.lemmatize(go(l3))
+
+  noun = go(l1)
+  adj = go(l2)
+  verb = go(l3)
 
   s = ""
   if len(noun):
@@ -57,6 +61,6 @@ def dogify(inp):
   s += "wow"
   return s
 
-inp = raw_input()
-print dogify(inp)
-
+#fp = open("sample")
+s = raw_input()
+print dogify(s)
