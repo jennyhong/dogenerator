@@ -5,15 +5,12 @@
   var REQUEST_DONE = 4;
 
   var dogifyButton = document.getElementById('dogify');
-  console.log(dogifyButton);
   var toDogify = document.getElementById('user-input');
   var outputSpace = document.getElementById('result');
 
   dogifyButton.addEventListener('click', function(event) {
     event.preventDefault();
-    console.log('button pressed');
     var request = new XMLHttpRequest();
-    console.log(toDogify.value);
     var URIinput = encodeURIComponent(toDogify.value);
     request.open('GET', DOGE_URL + URIinput);
     request.send();

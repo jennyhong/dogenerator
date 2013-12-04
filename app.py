@@ -1,8 +1,9 @@
+import collections
 from flask import Flask, render_template, send_from_directory
 import random
 import os
 import nltk
-# from nltk.stem import WordNetLemmatizer
+from nltk.stem import WordNetLemmatizer
 
 # initialization
 app = Flask(__name__)
@@ -29,53 +30,61 @@ def about():
 
 @app.route("/dogify/<inp>")
 def dogify(inp):
-	l = nltk.word_tokenize(inp)
-	l1, l2, l3 = [], [], []
+	wnl = WordNetLemmatizer()
+	words_by_pos = findRelevantWords(inp)
 
-	for i, j in nltk.pos_tag(l):
-		if len(i) < 4: continue
-		if j == "NN":
-			l1.append(i)
-		elif j == "JJ":
-			l2.append(i)
-		elif j.find("VB") != -1:
-			l3.append(i)
+	mywords = collections.defaultdict(list)
+	prefs = collections.defaultdict(list)
+	phrases = []
 
-	def rnd(x):
-		return random.randint(0, x-1)
+	for key in words_by_pos:
+		random.shuffle(words_by_pos[key])
 
-	def go(l):
-		l.sort()
-		ret = [""]
-		cnt = 0
-		bst = 0
-		prv = ""
-		for i in l:
-		  if i != prv: 
-		    cnt = 0
-		  cnt += 1
-		  if cnt > bst:
-		    bst = cnt
-		    ret = []
-		  if cnt == bst:
-		    ret.append(i)
-		  prv = i
-		x = rnd(len(ret))
-		return ret[x]
+	mywords["nouns"] = shortlist(words_by_pos["NN"])
+	mywords["adjs"] = shortlist(words_by_pos["JJ"])
+	mywords["verbs"] = shortlist(words_by_pos["VB"])
 
-	noun = go(l1)
-	adj = go(l2)
-	verb = go(l3)
+	prefs["nouns"] = ["such", "so", "very"]
+	prefs["adjs"] = ["much", "such"]
+	prefs["verbs"] = ["such", "so", "very"]
 
-	s = ""
-	if len(noun):
-		s += "so " + noun + "\n"
-	if len(adj):
-		s += "much " + adj + "\n"
-	if len(verb):
-		s +=  "very " + verb + "\n"
-	s += "wow"
-	return s
+	dogewords = ["wow", "pls"]
+
+	for key in mywords:
+		for word in mywords[key]:
+			pref = random.choice(prefs[key])
+			w = wnl.lemmatize(word)
+			phrases.append(pref + " " + w)
+	random.shuffle(phrases)
+	phrases = phrases[:4]
+
+	for i in random.sample(xrange(len(phrases) - 1), max(len(phrases) / 5, 1)):
+		phrases.insert(i, random.choice(dogewords))
+
+	phrases.append("wow")
+
+	return ". ".join(phrases)
+
+def shortlist(tocut, minimum=3):
+	maxlen = max(len(tocut) / 3, minimum)
+	return tocut[:maxlen]
+
+def findRelevantWords(inp):
+	"""
+	Takes in a string and returns a dict from POS to lists
+	of words
+	"""
+	allwords = nltk.word_tokenize(inp)
+	words_by_pos = collections.defaultdict(list)
+
+	for word, pos in nltk.pos_tag(allwords):
+		if len(word) < 4: continue
+		if pos == "NN" or pos == "JJ":
+			words_by_pos[pos].append(word)
+		elif pos.find("VB") != -1:
+			words_by_pos["VB"].append(word)
+
+	return words_by_pos
 
 # launch
 if __name__ == "__main__":
