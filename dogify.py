@@ -2,6 +2,7 @@ import collections
 import nltk
 from nltk.stem import WordNetLemmatizer
 import random
+import string
 
 def dogify(inp):
   """
@@ -11,7 +12,7 @@ def dogify(inp):
   wnl = WordNetLemmatizer()
   words_by_pos = findRelevantWords(inp)
 
-  mywords = collections.defaultdict(list)
+  mywords = collections.defaultdict(set)
   prefs = collections.defaultdict(list)
   phrases = []
 
@@ -58,6 +59,6 @@ def findRelevantWords(inp):
     if len(word) < 4: continue
     for desiredpos in ["NN", "JJ", "VB"]:
       if pos.find(desiredpos) != -1:
-        words_by_pos[desiredpos].append(word)
+        words_by_pos[desiredpos].append(word.lower().strip(string.punctuation))
 
   return words_by_pos

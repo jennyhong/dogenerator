@@ -55,17 +55,19 @@
     var x = [];
     var y = [];
     var xmax = [];
+    var fontsize = [];
     for (var i = 0; i < phrases.length; i++) {
       red[i] = Math.floor(Math.random() * (255 - 50 + 1)) + 50;
       green[i] = Math.floor(Math.random() * (255 - 50 + 1)) + 50;
       blue[i] = Math.floor(Math.random() * (255 - 50 + 1)) + 50;
-      y[i] = Math.floor(Math.random() * (dogeImage.height - 20 + 1)) + 20;
-      xmax[i] = dogeImage.width - phrases[i].length * 14;
-      x[i] = Math.floor(Math.random() * (xmax[i] - 0 + 1)) + 0;
+      y[i] = Math.floor(Math.random() * (dogeImage.height - 40 + 1)) + 40;
+      fontsize[i] = (Math.random() * 20) + 20;
+      xmax[i] = dogeImage.width - phrases[i].length * fontsize[i];
+      x[i] = Math.floor(Math.random() * (xmax[i] - 20 + 1)) + 20;
     }
     for (var i = 0;i < phrases.length; i++) { 
       imageCtx.fillStyle = "rgb(" + red[i] + ", " + green[i] + ", " + blue[i] + ")";
-      imageCtx.font = "bold 24px 'Comic Sans MS'";
+      imageCtx.font = "bold " + fontsize[i] + "px 'Comic Sans MS'";
       imageCtx.fillText(phrases[i], x[i], y[i]);
     }
   }
