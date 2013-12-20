@@ -7,6 +7,7 @@
 
   // DOM elements for basic text user input 
   var dogifyButton = document.getElementById('dogify');
+  var saveButton = document.getElementById('save');
   var toDogify = document.getElementById('user-input');
   var outputSpace = document.getElementById('result');
   
@@ -71,5 +72,11 @@
       imageCtx.fillText(phrases[i], x[i], y[i]);
     }
   }
+
+  saveButton.addEventListener('click', function(event) {
+    window.open(imageCanvas.toDataURL('image/jpeg'));
+  })
+
+
 
 })(this, this.document);
