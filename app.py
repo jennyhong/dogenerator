@@ -1,4 +1,3 @@
-import doge_img
 import dogify
 from flask import Flask, render_template, send_from_directory
 import json
