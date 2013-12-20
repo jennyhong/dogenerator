@@ -6,6 +6,7 @@
   var REQUEST_DONE = 4;
 
   // DOM elements for basic text user input 
+  var main = document.getElementById('main');
   var dogifyButton = document.getElementById('dogify');
   var saveButton = document.getElementById('save');
   var toDogify = document.getElementById('user-input');
@@ -35,7 +36,7 @@
           phrases = JSON.parse(response);
           makeWords(phrases);
         } else {
-          $('.error')[0].innerText = "Uh oh! There was an error dogifying your text. Try another phrase. :(";
+          $('.error')[0].innerText = "Dogerror! Your text was probably too long or too short. :( Try again!";
         }
       }
     });
@@ -46,6 +47,10 @@
     imageCanvas.height = dogeImage.height;
     imageCtx = imageCanvas.getContext('2d');
     imageCtx.drawImage(dogeImage, 0, 0, dogeImage.width, dogeImage.height);
+    // This would be nice so that the div is the same size as the image
+    // and you don't have awkward space to the right of the image
+    // But I'm not good enough at css to make it look pretty. -- Jenny
+    main.style.width = dogeImage.width + 120 + 'px';
   }
 
   function makeWords(phrases) {
