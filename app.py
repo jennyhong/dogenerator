@@ -31,24 +31,6 @@ def about():
 def doge(inp):
 	return json.dumps(dogify.dogify(inp))
 
-@app.route('/generate/<inp>')
-def generate(inp):
-	phrases = dogify.dogify(inp)
-	img = doge_img.drawTextOnImage(phrases)
-	img_io = StringIO()
-	img.save(img_io, 'JPEG', quality=80)
-	img_io.seek(0)
-	return send_file(img_io, mimetype='image/jpeg')
-
-@app.route('/generate_text/<inp>')
-def generate_text(inp):
-	"""
-	Temporary function to display text on the website
-	To be replaced by generate(inp) which will return
-	the actual image
-	"""
-	return ". ".join(dogify.dogify(inp))
-
 # launch
 if __name__ == "__main__":
   port = int(os.environ.get("PORT", 5000))
