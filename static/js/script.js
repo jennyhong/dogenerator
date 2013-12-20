@@ -1,6 +1,6 @@
 // function(window, document, undefined) {
 
-  var DOGE_URL = '/dogify/';
+  var DOGE_URL = '/generate_text/';
   var STATUS_OK = 200;
   var REQUEST_DONE = 4;
 
