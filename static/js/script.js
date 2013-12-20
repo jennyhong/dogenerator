@@ -10,6 +10,10 @@
   var dogifyButton = document.getElementById('dogify');
   var saveButton = document.getElementById('save');
   var toDogify = document.getElementById('user-input');
+  toDogify.placeholder = "Dogenerator turns human text into doge. \
+Made at Thanksgiving party 2013 by Jenny (doge expert), \
+Steven (top coder), and Victor (moral support)."
+  toDogify.style.height = 'auto';
   var outputSpace = document.getElementById('result');
   
   // image
@@ -25,7 +29,11 @@
   dogifyButton.addEventListener('click', function(event) {
     event.preventDefault();
     var request = new XMLHttpRequest();
-    var URIinput = encodeURIComponent(toDogify.value);
+    var input = toDogify.value;
+    if (input === "") {
+      input = toDogify.placeholder;
+    }
+    var URIinput = encodeURIComponent(input);
     request.open('GET', DOGE_URL + URIinput);
     request.send();
     request.addEventListener('readystatechange', function(event) {
@@ -36,7 +44,8 @@
           phrases = JSON.parse(response);
           makeWords(phrases);
         } else {
-          $('.error')[0].innerText = "Dogerror! Your text was probably too long or too short. :( Try again!";
+          $('.error')[0].innerText = "Dogerror! Your text was \
+              probably too long or too short. :( Try again!";
         }
       }
     });
