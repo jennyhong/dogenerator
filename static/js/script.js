@@ -21,7 +21,6 @@
   // Initializes the array phrases upon clicking dogifyButton
   var phrases;
   dogifyButton.addEventListener('click', function(event) {
-    $('.error')[0].innerHTML = "";
     event.preventDefault();
     var request = new XMLHttpRequest();
     var URIinput = encodeURIComponent(toDogify.value);
@@ -30,12 +29,10 @@
     request.addEventListener('readystatechange', function(event) {
       if (this.readyState === REQUEST_DONE) {
         if (this.status === STATUS_OK) {
+          $('.error')[0].innerHTML = "";
           var response = this.responseText;
           phrases = JSON.parse(response);
           makeWords(phrases);
-          for (var i = 0; i < phrases.length; i++) {
-            console.log(phrases[i]);
-          }
         } else {
           $('.error')[0].innerText = "Uh oh! There was an error dogifying your text. Try another phrase. :(";
         }
