@@ -1,6 +1,9 @@
+import doge_img
 import dogify
 from flask import Flask, render_template, send_from_directory
+import json
 import os
+from StringIO import StringIO
 
 # initialization
 app = Flask(__name__)
@@ -25,9 +28,18 @@ def index():
 def about():
     return render_template('about.html')
 
+@app.route('/dogify/<inp>')
+def doge(inp):
+	return json.dumps(dogify.dogify(inp))
+
 @app.route('/generate/<inp>')
 def generate(inp):
-	return inp
+	phrases = dogify.dogify(inp)
+	img = doge_img.drawTextOnImage(phrases)
+	img_io = StringIO()
+	img.save(img_io, 'JPEG', quality=80)
+	img_io.seek(0)
+	return send_file(img_io, mimetype='image/jpeg')
 
 @app.route('/generate_text/<inp>')
 def generate_text(inp):
