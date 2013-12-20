@@ -10,9 +10,10 @@
   var dogifyButton = document.getElementById('dogify');
   var saveButton = document.getElementById('save');
   var toDogify = document.getElementById('user-input');
-  toDogify.placeholder = "Dogenerator turns human text into doge. \
-Made at Thanksgiving party 2013 by Jenny (doge expert), \
-Steven (top coder), and Victor (moral support)."
+  toDogify.placeholder = "Hit \"Dogify\" to generate \
+an image. Click \"Open Image\" to open the image in a \
+new tab to save. Don't doge anything too short or \
+too long. ";
   toDogify.style.height = 'auto';
   var outputSpace = document.getElementById('result');
   
@@ -28,6 +29,10 @@ Steven (top coder), and Victor (moral support)."
   var phrases;
   dogifyButton.addEventListener('click', function(event) {
     event.preventDefault();
+    generateImage();
+  });
+
+  function generateImage() {
     var request = new XMLHttpRequest();
     var input = toDogify.value;
     if (input === "") {
@@ -42,14 +47,14 @@ Steven (top coder), and Victor (moral support)."
           $('.error')[0].innerHTML = "";
           var response = this.responseText;
           phrases = JSON.parse(response);
-          makeWords(phrases);
+          addPhrasesToImage(phrases);
         } else {
           $('.error')[0].innerText = "Dogerror! Your text was \
               probably too long or too short. :( Try again!";
         }
       }
     });
-  });
+  }
 
   window.onload = function() {
     imageCanvas.width = dogeImage.width;
@@ -60,9 +65,10 @@ Steven (top coder), and Victor (moral support)."
     // and you don't have awkward space to the right of the image
     // But I'm not good enough at css to make it look pretty. -- Jenny
     main.style.width = dogeImage.width + 120 + 'px';
+    generateImage();
   }
 
-  function makeWords(phrases) {
+  function addPhrasesToImage(phrases) {
     imageCtx.drawImage(dogeImage, 0, 0, dogeImage.width, dogeImage.height);
     var red = [];
     var green = [];
@@ -89,7 +95,7 @@ Steven (top coder), and Victor (moral support)."
 
   saveButton.addEventListener('click', function(event) {
     window.open(imageCanvas.toDataURL('image/jpeg'));
-  })
+  });
 
 
 
