@@ -56,9 +56,8 @@ def findRelevantWords(inp):
 
   for word, pos in nltk.pos_tag(allwords):
     if len(word) < 4: continue
-    if pos == "NN" or pos == "JJ":
-      words_by_pos[pos].append(word)
-    elif pos.find("VB") != -1:
-      words_by_pos["VB"].append(word)
+    for desiredpos in ["NN", "JJ", "VB"]:
+      if pos.find(desiredpos) != -1:
+        words_by_pos[desiredpos].append(word)
 
   return words_by_pos
